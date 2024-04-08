@@ -21,6 +21,6 @@ public class User implements Serializable {  //fix object relationalm mapping no
     private String userName;
     private String password;
     private String email;
-    private Role role;
+    private String role;
 }
 

@@ -1,5 +1,6 @@
 package erp.pcpartsbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,9 +25,10 @@ public class Order implements Serializable {
     private Date orderDate;
     private Float orderPrice;
     private String orderStatus;
-    private Float promoCode;
+    private Float discount;
+    private String promoCode;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 }

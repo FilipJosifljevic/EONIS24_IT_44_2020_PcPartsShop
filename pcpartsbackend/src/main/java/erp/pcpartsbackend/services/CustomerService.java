@@ -19,7 +19,7 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(UUID customerId) {
-        return customerRepository.findByCustomerId(customerId);
+        return customerRepository.findByUserId(customerId);
     }
 
     public Customer addCustomer(Customer customer) {
@@ -28,5 +28,9 @@ public class CustomerService {
 
     public void deleteCustomer(Customer customer) {
         customerRepository.delete(customer);
+    }
+
+    public boolean existById(UUID customerId){
+        return getCustomerById(customerId) != null;
     }
 }

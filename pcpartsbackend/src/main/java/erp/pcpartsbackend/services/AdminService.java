@@ -19,7 +19,14 @@ public class AdminService {
         return adminRepository.findAll();
     }
 
+    public Admin getAdminById(UUID adminId) {
+        return adminRepository.findByUserId(adminId);
+    }
+
     public Admin addAdmin(Admin admin) {
         return adminRepository.save(admin);
+    }
+    public boolean existById(UUID adminId){
+        return getAdminById(adminId) != null;
     }
 }

@@ -14,12 +14,12 @@ public class ProductOrderService {
     @Autowired
     private ProductOrderRepository productOrderRepository;
 
-    public List<ProductOrder> getllProductOrders() {
+    public List<ProductOrder> getAllProductOrders() {
         return productOrderRepository.findAll();
     }
 
     public ProductOrder getProductOrderById(UUID productOrderId) {
-        return productOrderRepository.findByProductId(productOrderId);
+        return productOrderRepository.findByProduct_ProductId(productOrderId);
     }
 
     public ProductOrder addProductOrder(ProductOrder productOrder) {
@@ -28,5 +28,9 @@ public class ProductOrderService {
 
     public void deleteProductOrder(ProductOrder productOrder){
         productOrderRepository.delete(productOrder);
+    }
+
+    public boolean existById(UUID productOrderId){
+        return getProductOrderById(productOrderId) != null;
     }
 }

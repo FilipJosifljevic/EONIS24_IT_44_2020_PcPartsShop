@@ -39,4 +39,38 @@ public class UserController {
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PostMapping("users")
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        if(userService.existById(user.getUserId())){
+            return new ResponseEntity<>(
+                    "User with that id already exists",
+                    HttpStatus.CONFLICT);
+        }
+        User savedUser = userService.addUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body(savedUser);
+    }
+
+    @PutMapping("users/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable("id") UUID userId) {
+        user.setUserId(userId);
+        if(!userService.existById(user.getUserId())){
+            return new ResponseEntity<>(
+                    "User with that id doesn't exist",
+                    HttpStatus.CONFLICT);
+        }
+        User savedUser = userService.addUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body(savedUser);
+    }
+
+    @DeleteMapping("users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID userId) {
+        if(!userService.existById(userId)){
+            return new ResponseEntity<>(
+                    "User with that id doesn't exist",
+                    HttpStatus.CONFLICT);
+        }
+        userService.deleteUser(userService.getUser(userId));
+        return ResponseEntity.status(HttpStatus.OK).body("User with that id has been deleted");
+    }
 }

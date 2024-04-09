@@ -20,7 +20,7 @@ public class ProviderService {
     }
 
     public Provider getProviderByProviderId(UUID providerId) {
-        return providerRepository.findProviderByProviderId(providerId);
+        return providerRepository.findProviderByUserId(providerId);
     }
 
     public Provider addProvider(Provider provider) {
@@ -29,5 +29,9 @@ public class ProviderService {
 
     public void deleteProvider(Provider provider) {
         providerRepository.delete(provider);
+    }
+
+    public boolean existById(UUID providerId){
+        return getProviderByProviderId(providerId) != null;
     }
 }

@@ -34,10 +34,14 @@ public class ProductService {
         return productRepository.findProductsByProvider_UserId(providerId);
     }
 
-    public Product saveProduct(Product product) {
+    public Product addProduct(Product product) {
         return productRepository.save(product);
     }
     public void deleteProduct(Product product) {
         productRepository.delete(product);
+    }
+
+    public boolean existById(UUID productId){
+        return getProductById(productId) != null;
     }
 }

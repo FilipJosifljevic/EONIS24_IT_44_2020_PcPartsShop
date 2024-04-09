@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface ProductOrderRepository extends JpaRepository<ProductOrder, Integer> {
-    ProductOrder findByProductId(UUID productId);
+    ProductOrder findByProduct_ProductId(UUID productId);
 }

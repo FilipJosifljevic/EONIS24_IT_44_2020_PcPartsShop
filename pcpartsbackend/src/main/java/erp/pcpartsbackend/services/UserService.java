@@ -30,4 +30,8 @@ public class UserService {
     public void deleteUser(User user){
         userRepository.delete(user);
     }
+
+    public boolean existById(UUID userId){
+        return getUser(userId) != null;
+    }
 }

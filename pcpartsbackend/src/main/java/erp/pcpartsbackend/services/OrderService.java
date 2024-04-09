@@ -41,4 +41,8 @@ public class OrderService {
     public void deleteOrder(Order order) {
         orderRepository.delete(order);
     }
+
+    public boolean existById(UUID orderId){
+        return getOrder(orderId) != null;
+    }
 }

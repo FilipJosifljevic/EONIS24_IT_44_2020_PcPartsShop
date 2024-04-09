@@ -73,4 +73,38 @@ public class OrderController {
         }
 
     }
+
+    @PostMapping("orders")
+    public ResponseEntity<?> addOrder(@RequestBody Order order) {
+        if(orderService.existById(order.getOrderId())){
+            return new ResponseEntity<>(
+                    "Order with that id already exists",
+                    HttpStatus.CONFLICT);
+        }
+        Order savedOrder = orderService.addOrder(order);
+        return ResponseEntity.status(HttpStatus.OK).body(savedOrder);
+    }
+
+    @PutMapping("orders/{id}")
+    public ResponseEntity<?> updateOrder(@RequestBody Order order, @PathVariable("id") UUID orderId) {
+        order.setOrderId(orderId);
+        if(!orderService.existById(order.getOrderId())){
+            return new ResponseEntity<>(
+                    "Order with that id doesn't exists",
+                    HttpStatus.CONFLICT);
+        }
+        Order savedOrder = orderService.addOrder(order);
+        return ResponseEntity.status(HttpStatus.OK).body(savedOrder);
+    }
+
+    @DeleteMapping("orders/{id}")
+    public  ResponseEntity<String> deleteOrder(@PathVariable("id") UUID orderId){
+        if(orderService.existById(orderId)){
+            return new ResponseEntity<>(
+                    "Order with that id doesn't exists",
+                    HttpStatus.CONFLICT);
+        }
+        orderService.deleteOrder(orderService.getOrder(orderId));
+        return ResponseEntity.status(HttpStatus.OK).body("Order with that id has been deleted");
+    }
 }

@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ProviderRepository extends JpaRepository<Provider, Integer> {
-    Provider findProviderByProviderId(UUID providerId);
+    Provider findProviderByUserId(UUID providerId);
 }

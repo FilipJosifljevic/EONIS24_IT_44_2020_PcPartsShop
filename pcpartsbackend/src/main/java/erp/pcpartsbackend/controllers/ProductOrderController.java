@@ -1,7 +1,11 @@
 package erp.pcpartsbackend.controllers;
 
+import erp.pcpartsbackend.models.Order;
+import erp.pcpartsbackend.models.Product;
 import erp.pcpartsbackend.models.ProductOrder;
+import erp.pcpartsbackend.services.OrderService;
 import erp.pcpartsbackend.services.ProductOrderService;
+import erp.pcpartsbackend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,10 @@ public class ProductOrderController {
     
     @Autowired
     private ProductOrderService productOrderService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("productOrders")
     public ResponseEntity<?> getAllProductOrders() {
@@ -48,6 +56,20 @@ public class ProductOrderController {
                     "Product order with that id already exists",
                     HttpStatus.CONFLICT);
         }
+        Product product = productOrder.getProduct();
+        if (product == null) {
+            return new ResponseEntity<>(
+                    "Product not found",
+                    HttpStatus.NOT_FOUND);
+        }
+        Order order = productOrder.getOrder();
+        if (order == null) {
+            return new ResponseEntity<>(
+                    "Order not found",
+                    HttpStatus.NOT_FOUND);
+        }
+        order.setOrderPrice(order.getOrderPrice()+ product.getProductPrice()*productOrder.getQuantity());
+        product.setQuantityInStock(product.getQuantityInStock() - productOrder.getQuantity());
         ProductOrder savedproductOrder = productOrderService.addProductOrder(productOrder);
         return ResponseEntity.status(HttpStatus.OK).body(savedproductOrder);
     }

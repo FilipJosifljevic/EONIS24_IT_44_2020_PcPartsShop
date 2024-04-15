@@ -25,7 +25,7 @@ public class Order implements Serializable {
     private Date orderDate;
     private Float orderPrice;
     private String orderStatus;
-    private Float discount;
+    private double discount;
     private String promoCode;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

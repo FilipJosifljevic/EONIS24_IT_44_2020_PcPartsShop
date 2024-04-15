@@ -93,6 +93,12 @@ public class OrderController {
                     "Order with that id doesn't exists",
                     HttpStatus.CONFLICT);
         }
+        if (order.getPromoCode() != null && !order.getPromoCode().isEmpty()) {
+            int percentage = Integer.parseInt(order.getPromoCode().substring(0, 2));
+            order.setDiscount((double) percentage / 100);
+        } else {
+            order.setDiscount(0.0);
+        }
         Order savedOrder = orderService.addOrder(order);
         return ResponseEntity.status(HttpStatus.OK).body(savedOrder);
     }

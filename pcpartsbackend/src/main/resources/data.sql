@@ -1,21 +1,21 @@
-INSERT INTO "users"(user_id, user_name, password, email, role)
-VALUES('fd96ec5f-518b-4791-bc9f-d11ff0af9c2f', 'john_doe', '5f4dcc3b5aa765d61d8327deb882cf99', 'john.doe@example.com', 'Customer');
+INSERT INTO "users"(user_id, password, email, role)
+VALUES('fd96ec5f-518b-4791-bc9f-d11ff0af9c2f', '$2a$10$ztAUps1royz/4meuqMPPkOr2FXlJn7Q2jT.Cb/uxYoHaWyEuPrZ5K', 'john.doe@example.com', 'CUSTOMER');
 INSERT INTO "customers"(customer_id, first_name, last_name, adress, zip_code)
 VALUES ('fd96ec5f-518b-4791-bc9f-d11ff0af9c2f', 'John', 'Doe', '123 Main St', '12345');
-INSERT INTO "users"(user_id, user_name, password, email, role)
-VALUES('f751d9cc-3285-47c4-9f84-4c56e79a5f32','jane_smith', '098f6bcd4621d373cade4e832627b4f6', 'jane.smith@example.com', 'Customer');
+INSERT INTO "users"(user_id, password, email, role)
+VALUES('f751d9cc-3285-47c4-9f84-4c56e79a5f32', '$2a$10$cUf4KmV/rkHxdmyOV3HdaOTKft89jo.7NfZu5pH5s2eQ0KivY8XVS', 'jane.smith@example.com', 'CUSTOMER');
 INSERT INTO "customers"(customer_id, first_name, last_name, adress, zip_code)
 VALUES ('f751d9cc-3285-47c4-9f84-4c56e79a5f32', 'Jane', 'Smith', '456 Second St', '54232');
-INSERT INTO "users"(user_id, user_name, password, email, role)
-VALUES('c1bb4e93-513e-4ddd-bd3c-12844977d481','admin_user', 'e10adc3949ba59abbe56e057f20f883e', 'admin.user@example.com', 'Admin');
+INSERT INTO "users"(user_id, password, email, role)
+VALUES('c1bb4e93-513e-4ddd-bd3c-12844977d481', '$2a$10$dJviPqW.s1g1yLFWYzpkrumPg3xgB796WX5vYPFNHkBTlvzahYxnW', 'admin.user@example.com', 'ADMIN');
 INSERT INTO "admins"(admin_id)
 VALUES('c1bb4e93-513e-4ddd-bd3c-12844977d481');
-INSERT INTO "users"(user_id, user_name, password, email, role)
-VALUES('021683ec-eb5a-447a-aefd-b29f34e466f2','provider1_user', '827ccb0eea8a706c4c34a16891f84e7b', 'provider1.user@example.com', 'Provider');
+INSERT INTO "users"(user_id,  password, email, role)
+VALUES('021683ec-eb5a-447a-aefd-b29f34e466f2', '$2a$10$VFR3JuXV/6Qw1Mw5NLL.jul.CW1NxUW0Z3GnM0HFBUokCRizhVb8C', 'provider1.user@example.com', 'PROVIDER');
 INSERT INTO "providers"(provider_id, provider_name, city_name, contact_number)
 VALUES('021683ec-eb5a-447a-aefd-b29f34e466f2', 'Gigatron', 'Belgrade', 0114362231);
-INSERT INTO "users"(user_id, user_name, password, email, role)
-VALUES('99e97c24-dd0b-4cf0-a72b-98697936fb20','provider2_user', '098f6bcd4621d373cade4e832627b4f6', 'provider2.user@example.com', 'Provider');
+INSERT INTO "users"(user_id, password, email, role)
+VALUES('99e97c24-dd0b-4cf0-a72b-98697936fb20', '$2a$10$Lqk1/uXTsCIr3aacLMvQGuSVrbIXBH5C5tuUGbFUJdO2U.ZSIib4e', 'provider2.user@example.com', 'PROVIDER');
 INSERT INTO "providers"(provider_id, provider_name, city_name, contact_number)
 VALUES('99e97c24-dd0b-4cf0-a72b-98697936fb20', 'Samsung', 'Nis', 0423221321);
 

@@ -22,11 +22,11 @@ public class ProductOrder implements Serializable {
     private UUID productOrderId;
     private int quantity;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "orderId")
     private Order order;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productId")
     private Product product;
 }

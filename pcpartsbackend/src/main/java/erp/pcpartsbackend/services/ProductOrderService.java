@@ -19,7 +19,7 @@ public class ProductOrderService {
     }
 
     public ProductOrder getProductOrderById(UUID productOrderId) {
-        return productOrderRepository.findByProduct_ProductId(productOrderId);
+        return productOrderRepository.findByProductOrderId(productOrderId);
     }
 
     public ProductOrder addProductOrder(ProductOrder productOrder) {

@@ -25,7 +25,7 @@ public class Product implements Serializable {
     private Float productPrice;
     private int quantityInStock;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "providerId")
     private Provider provider;
 }

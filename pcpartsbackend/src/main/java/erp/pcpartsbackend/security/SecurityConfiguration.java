@@ -3,20 +3,29 @@ package erp.pcpartsbackend.security;
 import erp.pcpartsbackend.models.User;
 import erp.pcpartsbackend.repositories.UserRepository;
 import erp.pcpartsbackend.services.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -30,22 +39,25 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
                         registry.requestMatchers("/register/**").permitAll();
                         registry.requestMatchers("/users/**").hasRole("ADMIN");
                         registry.requestMatchers("/products").permitAll();
-                        registry.requestMatchers("/products/**").hasRole("ADMIN");
-                        registry.requestMatchers("/products/**").hasRole("PROVIDER");
-                        registry.requestMatchers("/orders/**").hasRole("ADMIN");
-                        registry.requestMatchers("/orders/**").hasRole("CUSTOMER");
+                        registry.requestMatchers("/products/**").permitAll();
+                        registry.requestMatchers("/orders/**").hasAnyRole("ADMIN", "CUSTOMER");
                         registry.requestMatchers("/productOrders").hasRole("CUSTOMER");
                         registry.requestMatchers("/customers/**").hasRole("CUSTOMER");
                         registry.requestMatchers("/providers/**").hasRole("PROVIDER");
                         registry.requestMatchers("/admins/**").hasRole("ADMIN");
-                        registry.anyRequest().authenticated();
+                        registry.requestMatchers(HttpMethod.OPTIONS).permitAll();
+                        //registry.anyRequest().authenticated();
                 })
-                .formLogin(Customizer.withDefaults());
+                .httpBasic(Customizer.withDefaults())
+                //.formLogin(Customizer.withDefaults())
+                .authenticationProvider(authenticationProvider());
+                //.exceptionHandling((exception) -> exception.accessDeniedHandler(forbiddenHandler()).authenticationEntryPoint(unauthorizedEntryPoint()))
 
         return http.build();
     }
@@ -57,6 +69,7 @@ public class SecurityConfiguration {
         return userDetailService;
     }
 
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -65,7 +78,19 @@ public class SecurityConfiguration {
         return daoAuthenticationProvider;
     }
 
+    @Bean
+    public AuthenticationEntryPoint unauthorizedEntryPoint() {
+        return (request, response, authException) -> {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        };
+    }
 
+    @Bean
+    public AccessDeniedHandler forbiddenHandler() {
+        return (request, response, accessDeniedException) -> {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+        };
+    }
 
     @Bean
     BCryptPasswordEncoder getEncoder(){

@@ -58,7 +58,7 @@ public class AdminController {
         if(!adminService.existById(admin.getUserId())){
             return new ResponseEntity<>(
                     "Admin with that id doesn't exist",
-                    HttpStatus.CONFLICT);
+                    HttpStatus.NOT_FOUND);
         }
         Admin savedadmin = adminService.addAdmin(admin);
         return ResponseEntity.status(HttpStatus.OK).body(savedadmin);

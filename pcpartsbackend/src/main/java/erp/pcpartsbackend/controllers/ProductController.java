@@ -42,8 +42,56 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @GetMapping("products/byName")
+    public ResponseEntity<?> getProductsByName(@RequestParam("productName") String productName) {
+        List<Product> products = productService.getProductsByName(productName);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(
+                    "Products not found",
+                    HttpStatus.NOT_FOUND
+            );
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("products/byCategory")
+    public ResponseEntity<?> getProductsByCategory(@RequestParam("productCategory") String category) {
+        List<Product> products = productService.getProductsByCategory(category.toUpperCase());
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(
+                    "Products not found",
+                    HttpStatus.NOT_FOUND
+            );
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("products/byProvider")
+    public ResponseEntity<?> getProductsByProvider(@RequestParam("providerName") String providerName) {
+        List<Product> products = productService.getProductsByProvider(providerName);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(
+                    "Products not found",
+                    HttpStatus.NOT_FOUND
+            );
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("products/byPrice")
+    public ResponseEntity<?> getProductsByPrice(@RequestParam("minPrice") Float minPrice, @RequestParam("maxPrice") Float maxPrice) {
+        List<Product> products = productService.getProductsByPriceRange(minPrice, maxPrice);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(
+                    "Products not found",
+                    HttpStatus.NOT_FOUND
+            );
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
     @PostMapping("products")
-    public ResponseEntity<?> addproduct(@RequestBody Product product) {
+    public ResponseEntity<?> addProduct(@RequestBody Product product) {
         if(productService.existById(product.getProductId())){
             return new ResponseEntity<>(
                     "Product with that id already exists",
@@ -54,7 +102,7 @@ public class ProductController {
     }
 
     @PutMapping("products/{id}")
-    public ResponseEntity<?> updateproduct(@RequestBody Product product, @PathVariable("id") UUID productId) {
+    public ResponseEntity<?> updateProduct(@RequestBody Product product, @PathVariable("id") UUID productId) {
         product.setProductId(productId);
         if(!productService.existById(product.getProductId())){
             return new ResponseEntity<>(

@@ -30,8 +30,12 @@ public class ProductService {
         return  productRepository.findProductByProductNameContaining(productName);
     }
 
-    public List<Product> getProductsByProvider(UUID providerId) {
-        return productRepository.findProductsByProvider_UserId(providerId);
+    public List<Product> getProductsByProvider(String providerName) {
+        return productRepository.findProductsByProvider_providerName(providerName);
+    }
+
+    public List<Product> getProductsByPriceRange(Float priceMin, Float priceMax) {
+        return productRepository.findProductsByProductPriceBetween(priceMin, priceMax);
     }
 
     public Product addProduct(Product product) {

@@ -13,6 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findProductByProductName(String productName);
     List<Product> findProductByProductNameContaining(String productName);
     List<Product> findProductsByProductCategory(String productCategory);
-    List<Product> findProductsByProvider_UserId(UUID providerId);
+    List<Product> findProductsByProvider_providerName(String providerName);
+    List<Product> findProductsByProductPriceBetween(Float minPrice, Float maxPrice);
     Product findProductByProductId(UUID productId);
 }

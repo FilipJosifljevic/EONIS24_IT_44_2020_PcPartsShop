@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                         registry.requestMatchers("/register/**").permitAll();
                         registry.requestMatchers("/users/**").hasRole("ADMIN");
                         registry.requestMatchers("/products").permitAll();
-                        registry.requestMatchers("/products/**").hasAnyRole("ADMIN", "PROVIDER");
+                        registry.requestMatchers("/products/**").permitAll();
                         registry.requestMatchers("/orders/**").hasAnyRole("ADMIN", "CUSTOMER");
                         registry.requestMatchers("/productOrders").hasRole("CUSTOMER");
                         registry.requestMatchers("/customers/**").hasAnyRole("ADMIN", "CUSTOMER");

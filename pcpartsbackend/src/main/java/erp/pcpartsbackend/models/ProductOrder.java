@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -21,12 +23,12 @@ public class ProductOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID productOrderId;
     private int quantity;
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "orderId")
     private Order order;
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "productId")
     private Product product;
 }

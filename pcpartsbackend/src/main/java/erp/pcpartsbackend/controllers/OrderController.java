@@ -105,7 +105,7 @@ public class OrderController {
 
     @DeleteMapping("orders/{id}")
     public  ResponseEntity<String> deleteOrder(@PathVariable("id") UUID orderId){
-        if(orderService.existById(orderId)){
+        if(!orderService.existById(orderId)){
             return new ResponseEntity<>(
                     "Order with that id doesn't exists",
                     HttpStatus.CONFLICT);

@@ -1,0 +1,23 @@
+<div class="register-container">
+  <p-panel header="Register" [style]="{width: '300px'}">
+    <div class="p-grid p-fluid">
+      <div class="p-col-12">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" pInputText [(ngModel)]="username" class="p-inputtext" />
+      </div>
+      <div class="p-col-12">
+        <label>Password</label>
+        <p-password [(ngModel)]="password" [feedback]="false"></p-password>
+      </div>
+      <div class="p-col-12">
+        <label>Role</label>
+        <p-dropdown [options]="roles" [(ngModel)]="selectedRole" optionLabel="name" [showClear]="true" placeholder="Select a Role"></p-dropdown>
+      </div>
+    </div>
+    <div class="p-grid p-justify-center text-center m-4">
+      <div class="p-col-12">
+        <button pButton pRipple label="Register" class="p-button-icon" (click)="register()"></button>
+      </div>
+    </div>
+  </p-panel>
+</div>

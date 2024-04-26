@@ -1,0 +1,19 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+}
+
+p-dropdown .p-dropdown-trigger {
+  width: 100%; /* Set the width of the trigger button to 100% */
+}
+
+p-dropdown .p-dropdown-panel {
+  width: 100%; /* Set the width of the dropdown panel to 100% */
+  max-width: unset; /* Remove any max-width restriction */
+}

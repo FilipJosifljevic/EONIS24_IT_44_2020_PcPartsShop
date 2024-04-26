@@ -44,12 +44,17 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(registry -> {
                         registry.requestMatchers("/register/**").permitAll();
                         registry.requestMatchers("/users/**").hasRole("ADMIN");
-                        registry.requestMatchers("/products").permitAll();
-                        registry.requestMatchers("/products/**").permitAll();
-                        registry.requestMatchers("/orders/**").hasAnyRole("ADMIN", "CUSTOMER");
+                        registry.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
+                        registry.requestMatchers(HttpMethod.PUT, "/products/**").hasAnyRole("PROVIDER", "ADMIN");
+                        registry.requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("PROVIDER", "ADMIN");
+                        registry.requestMatchers(HttpMethod.POST,"/products/**").hasRole("PROVIDER");
+                        registry.requestMatchers("/orders/**").hasAnyRole("ADMIN", "CUSTOMER");// customer samo svoje ordere na backendu
                         registry.requestMatchers("/productOrders").hasRole("CUSTOMER");
                         registry.requestMatchers("/customers/**").hasAnyRole("ADMIN", "CUSTOMER");
-                        registry.requestMatchers("/providers/**").hasAnyRole("ADMIN", "PROVIDER");
+                        registry.requestMatchers(HttpMethod.GET, "/providers/**").permitAll();
+                        registry.requestMatchers(HttpMethod.POST, "/providers/**").hasRole("PROVIDER");
+                        registry.requestMatchers(HttpMethod.PUT, "/providers/**").hasRole("PROVIDER");
+                        registry.requestMatchers(HttpMethod.DELETE, "/providers/**").hasAnyRole("ADMIN", "PROVIDER");
                         registry.requestMatchers("/admins/**").hasRole("ADMIN");
                         registry.requestMatchers(HttpMethod.OPTIONS).permitAll();
                         registry.anyRequest().authenticated();

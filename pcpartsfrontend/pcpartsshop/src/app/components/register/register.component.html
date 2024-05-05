@@ -1,17 +1,40 @@
 <div class="register-container">
   <p-panel header="Register" [style]="{width: '300px'}">
     <div class="p-grid p-fluid">
-      <div class="p-col-12">
-        <label for="username">Username</label>
-        <input id="username" name="username" type="text" pInputText [(ngModel)]="username" class="p-inputtext" />
+      <div class="p-col-12 mt-5">
+        <p-floatLabel>
+          <input id="username" name="username" type="text" pInputText [(ngModel)]="username" class="p-inputtext" />
+          <label for="username">Username</label>
+        </p-floatLabel>
+
       </div>
-      <div class="p-col-12">
-        <label>Password</label>
-        <p-password [(ngModel)]="password" [feedback]="false"></p-password>
+      <div class="p-col-12 mt-5">
+        <p-floatLabel>
+          <p-password id="password" [(ngModel)]="password" [toggleMask]="true">
+            <ng-template pTemplate="header">
+              <h6>Pick a password</h6>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <p-divider />
+              <p class="mt-2">Suggestions</p>
+              <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                <li>At least one lowercase</li>
+                <li>At least one uppercase</li>
+                <li>At least one numeric</li>
+                <li>Minimum 8 characters</li>
+              </ul>
+            </ng-template>
+          </p-password>
+          <label for="password">Password</label>
+        </p-floatLabel>
+
       </div>
-      <div class="p-col-12">
-        <label>Role</label>
-        <p-dropdown [options]="roles" [(ngModel)]="selectedRole" optionLabel="name" [showClear]="true" placeholder="Select a Role"></p-dropdown>
+      <div class="p-col-12 mt-5">
+        <p-floatLabel>
+          <p-dropdown [options]="roles" [(ngModel)]="selectedRole" optionLabel="name" [showClear]="true" ></p-dropdown>
+          <label>Select a Role</label>
+        </p-floatLabel>
+
       </div>
     </div>
     <div class="p-grid p-justify-center text-center m-4">

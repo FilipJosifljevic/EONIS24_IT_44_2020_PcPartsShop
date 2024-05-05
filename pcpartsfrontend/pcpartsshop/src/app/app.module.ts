@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import {PasswordModule} from "primeng/password";
 import {ButtonModule} from "primeng/button";
 import { RegisterComponent } from './components/register/register.component';
+import {DividerModule} from "primeng/divider";
+import {FloatLabelModule} from "primeng/floatlabel";
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { RegisterComponent } from './components/register/register.component';
     InputTextModule,
     PasswordModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule,
+    DividerModule,
+    FloatLabelModule
   ],
   providers: [
     provideClientHydration()

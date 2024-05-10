@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -6,10 +8,12 @@ import {Component, OnInit} from '@angular/core';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
-  username: string = '';
+  email: string = '';
   password: string = '';
-  selectedRole: string | undefined;
+  selectedRole: { name: string; value: string } | undefined;
   roles : any[] | undefined;
+
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
     this.roles = [
@@ -21,11 +25,22 @@ export class RegisterComponent implements OnInit {
   register() {
     // Check if a role is selected
     if (this.selectedRole) {
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
-      console.log('SelectedRole:', this.selectedRole);
-
-      // Implement your registration logic here
+      const user = {
+        email: this.email,
+        password: this.password,
+        role: this.selectedRole.value
+      };
+      console.log(user);
+      const headers = new HttpHeaders().set('Content-Type', 'application/json');
+      this.http.post('http://localhost:8081/register', user, { headers: headers }).subscribe({
+        next: () => {
+          console.log('Registration successful');
+          this.router.navigate(['products']);
+        },
+        error: (error) => {
+          console.error('Registration failed:', error);
+        }
+      });
     } else {
       console.log('Please select a role');
     }

@@ -4,13 +4,16 @@ import erp.pcpartsbackend.models.User;
 import erp.pcpartsbackend.repositories.UserRepository;
 import erp.pcpartsbackend.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -35,6 +39,10 @@ public class SecurityConfiguration {
     @Autowired
     private MyUserDetailService userDetailService;
 
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,6 +51,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
                         registry.requestMatchers("/register/**").permitAll();
+                        registry.requestMatchers("/login/**").permitAll();
                         registry.requestMatchers("/users/**").hasRole("ADMIN");
                         registry.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
                         registry.requestMatchers(HttpMethod.PUT, "/products/**").hasAnyRole("PROVIDER", "ADMIN");
@@ -59,9 +68,9 @@ public class SecurityConfiguration {
                         registry.requestMatchers(HttpMethod.OPTIONS).permitAll();
                         registry.anyRequest().authenticated();
                 })
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults());
                 //.formLogin(Customizer.withDefaults())
-                .authenticationProvider(authenticationProvider());
+                //.authenticationProvider(authenticationProvider());
                 //.exceptionHandling((exception) -> exception.accessDeniedHandler(forbiddenHandler()).authenticationEntryPoint(unauthorizedEntryPoint()))
 
         return http.build();

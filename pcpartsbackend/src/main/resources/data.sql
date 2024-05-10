@@ -20,22 +20,22 @@ INSERT INTO "providers"(provider_id, provider_name, city_name, contact_number)
 VALUES('99e97c24-dd0b-4cf0-a72b-98697936fb20', 'Samsung', 'Nis', 0423221321);
 
 
-INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock)
-VALUES ('531faa5b-8b06-4efb-b4a6-4d523f10a7a1', 'Nvidia GeForce RTX 3080', 'GPU', 79999.99, '021683ec-eb5a-447a-aefd-b29f34e466f2', 25);
-INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock)
-VALUES ('4b81c209-5c35-45a5-8484-1f65f25b42c9', 'AMD Ryzen 9 5900X', 'CPU', 54449.99, '99e97c24-dd0b-4cf0-a72b-98697936fb20', 27);
-INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock)
-VALUES ('e5c23180-5e32-4b5e-90c6-8f032cc282c2', 'Samsung 970 EVO Plus', 'SSD', 12229.99, '99e97c24-dd0b-4cf0-a72b-98697936fb20', 15);
-INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock)
-VALUES ('2d5c671f-3b68-4e5f-8e8c-7a54596d5479', 'Corsair RM850x', 'PSU', 13339.99, '021683ec-eb5a-447a-aefd-b29f34e466f2',30);
-INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock)
-VALUES ('ba5a9728-6a3d-4f8f-8d42-0fe58a0978a0', 'AMD Radeon RX 6800 XT', 'GPU', 66449.99, '021683ec-eb5a-447a-aefd-b29f34e466f2',22);
-INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock)
-VALUES ('fcb4ce23-4744-4a5f-98f0-6843142d982f', 'Intel Core i9-11900K', 'CPU', 52229.99, '99e97c24-dd0b-4cf0-a72b-98697936fb20', 17);
-INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock)
-VALUES ('19dbec1f-1f1b-4b68-81f6-3c3ab739e313', 'Crucial MX500 1TB', 'SSD', 9999.99, '021683ec-eb5a-447a-aefd-b29f34e466f2', 31);
-INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock)
-VALUES ('39e3190c-8c8c-4cb3-8d69-5265bfa399e7', 'EVGA SuperNOVA 750 G5', 'PSU', 11119.99, '99e97c24-dd0b-4cf0-a72b-98697936fb20', 38);
+INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock, image_url)
+VALUES ('531faa5b-8b06-4efb-b4a6-4d523f10a7a1', 'Nvidia GeForce RTX 3080', 'GPU', 79999.99, '021683ec-eb5a-447a-aefd-b29f34e466f2', 25, 'https://www.dotmarket.rs/image/catalog/feed_240/asus-nvidia-geforce-rtx-3080-ti-12gb-320bit-rog-strix-rtx3080ti-o12g-gaming-50202.jpg');
+INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock, image_url)
+VALUES ('4b81c209-5c35-45a5-8484-1f65f25b42c9', 'AMD Ryzen 9 5900X', 'CPU', 54449.99, '99e97c24-dd0b-4cf0-a72b-98697936fb20', 27, 'https://api.tehnoteka.rs/uploads/cache/product_4x3/uploads/2023/09/amd-ryzen-9-5900x-12-core-3-70-ghz-4-80-ghz-procesor-650d74a689251.jpeg');
+INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock, image_url)
+VALUES ('e5c23180-5e32-4b5e-90c6-8f032cc282c2', 'Samsung 970 EVO Plus', 'SSD', 12229.99, '99e97c24-dd0b-4cf0-a72b-98697936fb20', 15, 'https://www.tehnomedia.rs/image/73234.jpg?tip=webp&tip_slike=4');
+INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock, image_url)
+VALUES ('2d5c671f-3b68-4e5f-8e8c-7a54596d5479', 'Corsair RM850x', 'PSU', 13339.99, '021683ec-eb5a-447a-aefd-b29f34e466f2',30, 'https://api.tehnoteka.rs/uploads/cache/product_large/uploads/2023/10/corsair-napajanje-rm850x-850w-6537aa9cc6b2d.png');
+INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock, image_url)
+VALUES ('ba5a9728-6a3d-4f8f-8d42-0fe58a0978a0', 'AMD Radeon RX 6800 XT', 'GPU', 66449.99, '021683ec-eb5a-447a-aefd-b29f34e466f2',22, 'https://www.exceed.rs/images/products/big/69795.jpg');
+INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock, image_url)
+VALUES ('fcb4ce23-4744-4a5f-98f0-6843142d982f', 'Intel Core i9-11900K', 'CPU', 52229.99, '99e97c24-dd0b-4cf0-a72b-98697936fb20', 17, 'https://api.tehnoteka.rs/uploads/cache/product_large/uploads/2023/09/intel-core-i9-11900k-8-core-3-50-ghz-5-30-ghz-procesor-650d72374c9e2.png');
+INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock, image_url)
+VALUES ('19dbec1f-1f1b-4b68-81f6-3c3ab739e313', 'Crucial MX500 1TB', 'SSD', 9999.99, '021683ec-eb5a-447a-aefd-b29f34e466f2', 31, 'https://c.cdnmp.net/160631482/p/l/9/ssd-sata3-1tb-crucial-mx500-3d-nand-560-510mb-s-ct1000mx500ssd1~1239.jpg');
+INSERT INTO "products" (product_id, product_name, product_category, product_price, provider_id, quantity_in_stock, image_url)
+VALUES ('39e3190c-8c8c-4cb3-8d69-5265bfa399e7', 'EVGA SuperNOVA 750 G5', 'PSU', 11119.99, '99e97c24-dd0b-4cf0-a72b-98697936fb20', 38, 'https://m.media-amazon.com/images/I/51mj8uHII5L._AC_.jpg');
 
 INSERT INTO "orders" (order_id, order_date, order_price, order_status, discount, promo_code, customer_id)
 VALUES ('f6c23e5f-587d-4a47-9264-16cf3262e2f3', '2024-03-18', 79999.99, 'Pending', 0.0, NULL, 'FD96EC5F-518B-4791-BC9F-D11FF0AF9C2F');

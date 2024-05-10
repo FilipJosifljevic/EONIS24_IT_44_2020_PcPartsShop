@@ -1,0 +1,23 @@
+<div class="productspage-container">
+  <div class="dock-window">
+    <p-dock [model]="items" position="left">
+      <ng-template pTemplate="item" let-item>
+        <img [src]="item.icon" [alt]="item.label" width="100%" />
+      </ng-template>
+    </p-dock>
+  </div>
+  <div class="products-list">
+    <div class="p-grid">
+      <div *ngFor="let product of products" class="p-col-12 p-md-4 ml-5 p-lg-3">
+        <p-card header="{{ product.productName }}" [style]="{ 'margin-bottom': '20px' }">
+          <ng-template pTemplate="content">
+            <img class="ml-7" src="{{product.imageUrl}}" alt="{{ product.productName }}" style="width: 300px; height: 250px;" />
+            <p>{{ product.productCategory }}</p>
+            <p>{{ product.productPrice }} RSD</p>
+            <p>Quantity in stock: {{ product.quantityInStock }}</p>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>

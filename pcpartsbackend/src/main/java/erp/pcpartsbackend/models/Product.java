@@ -26,6 +26,7 @@ public class Product implements Serializable {
     private String productCategory;
     private Float productPrice;
     private int quantityInStock;
+    private String imageUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "providerId")

@@ -1,0 +1,61 @@
+.dock-window {
+  width: 7%;
+  height: 100vh;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1000;
+}
+
+
+.productspage-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.p-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.p-col-12,
+.p-md-4,
+.p-lg-3 {
+  flex: 0 0 calc(33% - 50px);
+  margin-bottom: 20px;
+}
+.p-card .p-card-title {
+  text-align: center; /* Center the productName */
+}
+
+.p-card .p-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center text horizontally */
+}
+
+.p-card .p-card-body img {
+  max-width: 100%; /* Ensure the image does not exceed the container width */
+  height: auto; /* Maintain the image aspect ratio */
+}
+
+img:hover {
+  cursor: pointer;
+}
+
+

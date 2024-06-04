@@ -1,6 +1,7 @@
 package erp.pcpartsbackend.repositories;
 
 import erp.pcpartsbackend.models.Order;
+import erp.pcpartsbackend.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;

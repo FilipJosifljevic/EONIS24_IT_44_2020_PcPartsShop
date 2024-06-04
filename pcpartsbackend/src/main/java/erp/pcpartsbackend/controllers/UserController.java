@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @CrossOrigin("*")
@@ -33,6 +34,18 @@ public class UserController {
     public ResponseEntity<?> getUserById(@PathVariable("id") UUID userId) {
         User user = userService.getUser(userId);
         if (user == null) {
+            return new ResponseEntity<>(
+                    "User not found",
+                    HttpStatus.NOT_FOUND
+            );
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("users/email/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable("email") String email) {
+        Optional<User> user = userService.getUserByEmail(email);
+        if (user.isEmpty()) {
             return new ResponseEntity<>(
                     "User not found",
                     HttpStatus.NOT_FOUND

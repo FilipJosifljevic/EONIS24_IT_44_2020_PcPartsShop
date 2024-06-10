@@ -1,0 +1,44 @@
+<p-tabView>
+  <p-tabPanel header="Users">
+    <p-table [value]="users" [tableStyle]="{'min-width': '50rem'}">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>User id</th>
+          <th>Email name</th>
+          <th>Role</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{user.userId}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.role}}</td>
+          <td><p-button (click)="deleteUser(user.userId)" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" /></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+  <p-tabPanel header="Orders">
+    <p-table [value]="orders" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>OrderId</th>
+          <th>Date</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Customer</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-order>
+        <tr>
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.orderDate | date}}</td>
+          <td>{{order.orderPrice | currency : 'RSD'}}</td>
+          <td>{{ order.orderStatus }}</td>
+          <td>{{order.customer.firstName + ' ' + order.customer.lastName}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+</p-tabView>

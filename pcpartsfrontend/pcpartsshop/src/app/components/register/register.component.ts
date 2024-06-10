@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
       this.http.post('http://localhost:8081/register', user, { headers: headers }).subscribe({
         next: () => {
           console.log('Registration successful');
-          this.router.navigate(['products']);
+          this.router.navigate(['login']);
         },
         error: (error) => {
           console.error('Registration failed:', error);

@@ -29,7 +29,6 @@ public class Order implements Serializable {
     private String orderStatus;
     private double discount;
     private String promoCode;
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "customer_id")

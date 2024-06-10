@@ -1,0 +1,33 @@
+<div class="product-list">
+  <div *ngFor="let item of cartItems" class="cart-item">
+    <img [src]="productsMap[item.product.productId]?.imageUrl" alt="{{ productsMap[item.product.productId]?.productName }}">
+    <div>
+      <p>{{ productsMap[item.product.productId]?.productName }}</p>
+      <p>Quantity: {{ item.quantity }}</p>
+      <p>Price: {{ productsMap[item.product.productId]?.productPrice | currency : 'RSD' }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="stripe-container">
+  <div class="p-2 m-1" id="card-element">
+    <!-- Stripe card element will be mounted here -->
+  </div>
+  <small style="display: block;" class="text-danger">
+    {{cardError}}
+  </small>
+</div>
+
+<div class="checkout-button-container">
+  <button pButton (click)="getToken()" label="Checkout" icon="pi pi-check" class="p-button-rounded p-button-success"></button>
+</div>
+
+<div *ngIf="charge" class="alert alert-success">
+  <h5>Successfully Created Charge</h5>
+  <p>Charge Id: {{charge.id}}</p>
+</div>
+
+<div *ngIf="chargeError" class="alert alert-danger">
+  <h5>A Stripe Error Occurred</h5>
+  <p>{{chargeError.error}}</p>
+</div>

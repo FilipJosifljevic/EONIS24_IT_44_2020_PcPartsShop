@@ -1,23 +1,39 @@
 <div class="productspage-container">
-  <div class="dock-window">
-    <p-dock [model]="items" position="left">
-      <ng-template pTemplate="item" let-item>
-        <img [src]="item.icon" [alt]="item.label" width="100%" />
-      </ng-template>
-    </p-dock>
+  <div class="filter-button mr-8 mt-6">
+    <p-button icon="pi pi-filter" severity="secondary" [text]="true" (click)="menu.toggle($event)"/>
+    <p-menu #menu [model]="menu_items" [popup]="true" />
   </div>
-  <div class="products-list">
+  <div class="products-list ml-6">
     <div class="p-grid">
-      <div *ngFor="let product of products" class="p-col-12 p-md-4 ml-5 p-lg-3">
-        <p-card header="{{ product.productName }}" [style]="{ 'margin-bottom': '20px' }">
+      <p-divider type="solid" class="pl-5 pr-5"></p-divider>
+      <div *ngFor="let product of products" class="p-col-12 p-md-4 ml-6 mt-4 p-lg-3 product">
+        <p-card header="{{ product.productName }}" [style]="{ 'margin-bottom': '20px' } ">
           <ng-template pTemplate="content">
-            <img class="ml-7" src="{{product.imageUrl}}" alt="{{ product.productName }}" style="width: 300px; height: 250px;" />
-            <p>{{ product.productCategory }}</p>
-            <p>{{ product.productPrice }} RSD</p>
+            <img (click)="viewProductDetails(product.productId)" class="ml-7" src="{{product.imageUrl}}" alt="{{ product.productName }}" style="width: 300px; height: 250px;" />
+            <br>
+            <p-tag class="ml-2" value="{{product.productCategory}}" severity="info" rounded="true"></p-tag>
+            <p-tag class="ml-2" *ngIf="product.quantityInStock > 0" value="In stock" severity="success" rounded="true"></p-tag>
+            <p-tag class="ml-2" *ngIf="product.quantityInStock === 0" value="Out of stock" severity="warning" rounded="true"></p-tag>
+            <p>{{ product.productPrice | currency : 'RSD'}}</p>
             <p>Quantity in stock: {{ product.quantityInStock }}</p>
+            <p-button (click)="editProduct(product)" *ngIf="isEditableByCurrentUser(product)" icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning"/>
+            <p-button (click)="deleteProduct(product.productId)" *ngIf="isEditableByCurrentUser(product)" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
           </ng-template>
         </p-card>
       </div>
     </div>
   </div>
 </div>
+<mat-paginator #paginator
+               class="demo-paginator"
+               (page)="handlePageEvent($event)"
+               [length]="length"
+               [pageSize]="pageSize"
+               [disabled]="disabled"
+               [showFirstLastButtons]="showFirstLastButtons"
+               [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+               [hidePageSize]="hidePageSize"
+               [pageIndex]="pageIndex"
+               aria-label="Select page">
+</mat-paginator>
+<app-add-product-dialog #addProductDialog></app-add-product-dialog>

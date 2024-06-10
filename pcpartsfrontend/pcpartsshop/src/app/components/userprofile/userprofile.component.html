@@ -1,0 +1,19 @@
+<div *ngIf="currentUser">
+  <h2>User Profile</h2>
+  <div *ngIf="isCustomer">
+    <!-- Display fields for customer -->
+    <label>First Name: </label>
+    <input type="text" [(ngModel)]="currentUser.firstName" name="firstName">
+    <label>Last Name: </label>
+    <input type="text" [(ngModel)]="currentUser.lastName" name="lastName">
+    <!-- Add more fields as needed -->
+  </div>
+  <div *ngIf="isProvider">
+    <!-- Display fields for provider -->
+    <label>Provider Name: </label>
+    <input type="text" [(ngModel)]="currentUser.providerName" name="providerName">
+    <label>City Name: </label>
+    <input type="text" [(ngModel)]="currentUser.cityName" name="cityName">
+    <!-- Add more fields as needed -->
+  </div>
+</div>

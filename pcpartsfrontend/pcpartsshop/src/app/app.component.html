@@ -1,1 +1,50 @@
-<router-outlet />
+<p-menubar [model]="items">
+  <ng-template pTemplate="item" let-item>
+    <a [routerLink]="item.route" pRipple class="flex align-items-center p-menuitem-link">
+      <span [class]="item.icon"></span>
+      <span class="ml-2">{{ item.label }}</span>
+    </a>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div class="flex align-items-center gap-5">
+      <div class="search-container">
+        <p-autoComplete
+          [(ngModel)]="searchText"
+          [suggestions]="filteredProducts"
+          field="productName"
+          (completeMethod)="searchProducts($event)"
+          (onSelect)="viewProductDetails($event)"
+          [minLength]="1"
+          placeholder="Search products"
+        >
+          <ng-template let-product pTemplate="item">
+            <div>{{ product.productName }}</div>
+          </ng-template>
+        </p-autoComplete>
+      </div>
+
+      <p-button (click)="navigateToDashboard()" *ngIf="currentUser?.role === 'ADMIN'" icon="pi pi-wrench" severity="secondary" [text]="true"></p-button>
+      <p-button (click)="addProductDialog.showDialog()" *ngIf="currentUser?.role === 'PROVIDER'" icon="pi pi-plus" severity="secondary" [text]="true"/>
+      <app-add-product-dialog #addProductDialog></app-add-product-dialog>
+      <p-button icon="pi pi-shopping-cart" severity="secondary" [text]="true" [routerLink]="['/cart']"></p-button>
+      <p-avatar icon="pi pi-user" shape="circle" size="large" (click)="menu.toggle($event)"></p-avatar>
+      <p-menu #menu [model]="menuItems" [popup]="true">
+        <ng-template pTemplate="item" let-item>
+          <ng-container *ngIf="item.route; else elseBlock">
+            <a [routerLink]="item.route" class="p-menuitem-link">
+              <span [class]="item.icon"></span>
+              <span class="ml-2">{{ item.label }}</span>
+            </a>
+          </ng-container>
+          <ng-template #elseBlock>
+            <a [href]="item.url" class="p-menuitem-link">
+              <span [class]="item.icon"></span>
+              <span class="ml-2">{{ item.label }}</span>
+            </a>
+          </ng-template>
+        </ng-template>
+      </p-menu>
+    </div>
+  </ng-template>
+</p-menubar>
+<router-outlet></router-outlet>

@@ -1,5 +1,6 @@
 package erp.pcpartsbackend.controllers;
 
+import erp.pcpartsbackend.controllers.dto.OrderDto;
 import erp.pcpartsbackend.models.Order;
 import erp.pcpartsbackend.repositories.OrderRepository;
 import erp.pcpartsbackend.services.OrderService;
@@ -75,31 +76,31 @@ public class OrderController {
     }
 
     @PostMapping("orders")
-    public ResponseEntity<?> addOrder(@RequestBody Order order) {
-        if(orderService.existById(order.getOrderId())){
+    public ResponseEntity<?> addOrder(@RequestBody OrderDto orderDto) {
+        if(orderService.existById(orderDto.getOrderId())){
             return new ResponseEntity<>(
                     "Order with that id already exists",
                     HttpStatus.CONFLICT);
         }
-        Order savedOrder = orderService.addOrder(order);
+        Order savedOrder = orderService.addOrder(orderDto);
         return ResponseEntity.status(HttpStatus.OK).body(savedOrder);
     }
 
     @PutMapping("orders/{id}")
-    public ResponseEntity<?> updateOrder(@RequestBody Order order, @PathVariable("id") UUID orderId) {
-        order.setOrderId(orderId);
-        if(!orderService.existById(order.getOrderId())){
+    public ResponseEntity<?> updateOrder(@RequestBody OrderDto orderDto, @PathVariable("id") UUID orderId) {
+        orderDto.setOrderId(orderId);
+        if(!orderService.existById(orderDto.getOrderId())){
             return new ResponseEntity<>(
                     "Order with that id doesn't exists",
                     HttpStatus.CONFLICT);
         }
-        if (order.getPromoCode() != null && !order.getPromoCode().isEmpty()) {
-            int percentage = Integer.parseInt(order.getPromoCode().substring(0, 2));
-            order.setDiscount((double) percentage / 100);
+        if (orderDto.getPromoCode() != null && !orderDto.getPromoCode().isEmpty()) {
+            int percentage = Integer.parseInt(orderDto.getPromoCode().substring(0, 2));
+            orderDto.setDiscount((double) percentage / 100);
         } else {
-            order.setDiscount(0.0);
+            orderDto.setDiscount(0.0);
         }
-        Order savedOrder = orderService.addOrder(order);
+        Order savedOrder = orderService.addOrder(orderDto);
         return ResponseEntity.status(HttpStatus.OK).body(savedOrder);
     }
 

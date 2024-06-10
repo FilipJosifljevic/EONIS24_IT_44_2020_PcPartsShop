@@ -1,0 +1,15 @@
+<div class="product-details-container">
+  <div class="product-image">
+    <img [src]="product?.imageUrl" [alt]="product?.productName" style="width: 550px; height: 450px;" />
+  </div>
+  <div class="product-info">
+    <h2>{{ product?.productName }}</h2>
+    <p>Category: {{ product?.productCategory }}</p>
+    <p>Price: {{ product?.productPrice | currency : 'RSD' }}</p>
+    <p>Quantity in stock: {{ product?.quantityInStock }}</p>
+    <input type="number" [(ngModel)]="quantity" />
+    <div class="mt-5" >
+      <p-button [outlined]="true" severity="contrast" (click)="addToCart()">Add to Cart</p-button>
+    </div>
+  </div>
+</div>

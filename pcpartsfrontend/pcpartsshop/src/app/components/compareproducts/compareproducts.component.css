@@ -1,0 +1,8 @@
+.flex-container {
+  display: flex;
+}
+
+/* Adjust spacing between cards if needed */
+.flex-container .col-md-6 {
+  margin-right: 10px; /* Adjust as needed */
+}

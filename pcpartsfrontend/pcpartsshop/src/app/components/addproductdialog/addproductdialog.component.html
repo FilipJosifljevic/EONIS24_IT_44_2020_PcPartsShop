@@ -1,0 +1,28 @@
+<p-dialog header="Add Product" [(visible)]="display" [modal]="true" [responsive]="true" [style]="{width: '50vw'}" [baseZIndex]="10000">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="productName">Product Name</label>
+      <input id="productName" type="text" pInputText [(ngModel)]="product.productName" required />
+    </div>
+    <div class="p-field">
+      <label for="productCategory">Product Category</label>
+      <input id="productCategory" type="text" pInputText [(ngModel)]="product.productCategory" required />
+    </div>
+    <div class="p-field">
+      <label for="productPrice">Product Price</label>
+      <input id="productPrice" type="number" pInputText [(ngModel)]="product.productPrice" required />
+    </div>
+    <div class="p-field">
+      <label for="quantityInStock">Quantity In Stock</label>
+      <input id="quantityInStock" type="number" pInputText [(ngModel)]="product.quantityInStock" required />
+    </div>
+    <div class="p-field">
+      <label for="imageUrl">Image URL</label>
+      <input id="imageUrl" type="text" pInputText [(ngModel)]="product.imageUrl" required />
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton label="Save" icon="pi pi-check" (click)="saveProduct()"></button>
+    <button type="button" pButton label="Cancel" icon="pi pi-times" (click)="display=false" class="p-button-secondary"></button>
+  </p-footer>
+</p-dialog>

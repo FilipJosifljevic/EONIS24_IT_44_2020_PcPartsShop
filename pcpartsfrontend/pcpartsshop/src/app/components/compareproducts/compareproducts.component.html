@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card flex justify-content-center mt-5">
+      <div class="card-body d-flex align-items-center">
+        <p-autoComplete
+          #autoComplete1
+          [(ngModel)]="selectedItem1"
+          [suggestions]="suggestions1"
+          (completeMethod)="searchProducts1($event)"
+          (onSelect)="selectProduct1($event)"
+          field="productName"
+          placeholder="Search"
+          class="w-8rem sm:w-auto mr-2">
+        </p-autoComplete>
+        <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" optionLabel="name" placeholder="Select a category" class="mx-2" (ngModelChange)="resetProducts()"></p-dropdown>
+        <p-autoComplete
+          #autoComplete2
+          [(ngModel)]="selectedItem2"
+          [suggestions]="suggestions2"
+          (completeMethod)="searchProducts2($event)"
+          (onSelect)="selectProduct2($event)"
+          field="productName"
+          placeholder="Search"
+          class="w-8rem sm:w-auto ml-2">
+        </p-autoComplete>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5 flex-container justify-content-center">
+  <div class="col-md-6">
+    <div *ngIf="selectedProduct1" class="card mt-2">
+      <p-card header="{{ selectedProduct1.productName }}">
+        <ng-template pTemplate="content">
+          <img src="{{selectedProduct1.imageUrl}}" alt="{{ selectedProduct1.productName }}" style="width: 300px; height: 250px;" />
+          <p-tag value="{{selectedProduct1.productCategory}}" severity="info" rounded="true"></p-tag>
+          <p-tag *ngIf="selectedProduct1.quantityInStock > 0" value="In stock" severity="success" rounded="true"></p-tag>
+          <p-tag *ngIf="selectedProduct1.quantityInStock === 0" value="Out of stock" severity="warning" rounded="true"></p-tag>
+          <p>{{ selectedProduct1.productPrice | currency : 'RSD' }}</p>
+          <p>Quantity in stock: {{ selectedProduct1.quantityInStock }}</p>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+
+  <div class="col-md-6" *ngIf="selectedProduct2">
+    <div class="card mt-2">
+      <p-card header="{{ selectedProduct2.productName }}">
+        <ng-template pTemplate="content">
+          <img src="{{selectedProduct2.imageUrl}}" alt="{{ selectedProduct2.productName }}" style="width: 300px; height: 250px;" />
+          <p-tag value="{{selectedProduct2.productCategory}}" severity="info" rounded="true"></p-tag>
+          <p-tag *ngIf="selectedProduct2.quantityInStock > 0" value="In stock" severity="success" rounded="true"></p-tag>
+          <p-tag *ngIf="selectedProduct2.quantityInStock === 0" value="Out of stock" severity="warning" rounded="true"></p-tag>
+          <p>{{ selectedProduct2.productPrice | currency : 'RSD' }}</p>
+          <p>Quantity in stock: {{ selectedProduct2.quantityInStock }}</p>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+</div>

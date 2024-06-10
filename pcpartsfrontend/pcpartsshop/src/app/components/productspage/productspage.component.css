@@ -1,29 +1,20 @@
-.dock-window {
-  width: 7%;
-  height: 100vh;
-  position: fixed;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 1000;
-}
-
-
 .productspage-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.filter-button {
+  margin-bottom: 5px;
 }
 
 .products-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  width: 80%;
+  justify-content: center;
+  width: 100%;
 }
 
 .p-grid {
@@ -34,28 +25,27 @@
 .p-col-12,
 .p-md-4,
 .p-lg-3 {
-  flex: 0 0 calc(33% - 50px);
-  margin-bottom: 20px;
-}
-.p-card .p-card-title {
-  text-align: center; /* Center the productName */
+  flex: 0 0 calc(30% - 20px);
+  max-width: calc(33.33% - 20px);
 }
 
-.p-card .p-card-body {
+.p-col-12:nth-child(3n+3) {
+  margin-right: 0;
+}
+
+.product {
+  transition: transform 0.2s;
+}
+
+.product:hover {
+  transform: scale(1.03);
+}
+p-divider {
+  width: 100%;
+}
+
+.filter-button {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center; /* Center text horizontally */
+  justify-content: flex-end;
+  width: 100%;
 }
-
-.p-card .p-card-body img {
-  max-width: 100%; /* Ensure the image does not exceed the container width */
-  height: auto; /* Maintain the image aspect ratio */
-}
-
-img:hover {
-  cursor: pointer;
-}
-
-

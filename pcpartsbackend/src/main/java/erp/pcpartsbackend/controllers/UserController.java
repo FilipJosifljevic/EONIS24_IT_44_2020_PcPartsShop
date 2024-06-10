@@ -78,7 +78,7 @@ public class UserController {
     }
 
     @DeleteMapping("users/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID userId) {
+    public ResponseEntity<?> deleteUser(@PathVariable("id") UUID userId) {
         if(!userService.existById(userId)){
             return new ResponseEntity<>(
                     "User with that id doesn't exist",

@@ -1,6 +1,9 @@
 package erp.pcpartsbackend.services;
 
+import erp.pcpartsbackend.controllers.dto.OrderDto;
+import erp.pcpartsbackend.models.Customer;
 import erp.pcpartsbackend.models.Order;
+import erp.pcpartsbackend.repositories.CustomerRepository;
 import erp.pcpartsbackend.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ import java.util.UUID;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -34,7 +39,17 @@ public class OrderService {
         return orderRepository.findAllByOrderDate(date);
     }
 
-    public Order addOrder(Order order) {
+    public Order addOrder(OrderDto orderDto) {
+        Order order = new Order();
+        order.setOrderDate(new Date());
+        order.setOrderPrice(orderDto.getOrderPrice());
+        order.setOrderStatus(orderDto.getOrderStatus());
+        order.setDiscount(orderDto.getDiscount());
+        order.setPromoCode(orderDto.getPromoCode());
+
+        UUID customerId = orderDto.getCustomerId();
+        Customer customer = customerRepository.findByUserId(customerId);
+        order.setCustomer(customer);
         return orderRepository.save(order);
     }
 

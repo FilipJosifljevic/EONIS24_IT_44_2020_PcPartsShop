@@ -1,9 +1,13 @@
 package erp.pcpartsbackend.controllers;
 
+import erp.pcpartsbackend.controllers.dto.ProductOrderDto;
+import erp.pcpartsbackend.controllers.dto.UpdateProductOrdersDto;
 import erp.pcpartsbackend.models.Order;
 import erp.pcpartsbackend.models.Product;
 import erp.pcpartsbackend.models.ProductOrder;
+import erp.pcpartsbackend.repositories.OrderRepository;
 import erp.pcpartsbackend.repositories.ProductOrderRepository;
+import erp.pcpartsbackend.repositories.ProductRepository;
 import erp.pcpartsbackend.services.OrderService;
 import erp.pcpartsbackend.services.ProductOrderService;
 import erp.pcpartsbackend.services.ProductService;
@@ -27,6 +31,10 @@ public class ProductOrderController {
     private ProductService productService;
     @Autowired
     private ProductOrderRepository productOrderRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping("productOrders")
     public ResponseEntity<?> getAllProductOrders() {
@@ -53,7 +61,7 @@ public class ProductOrderController {
     }
 
     @PostMapping("productOrders")
-    public ResponseEntity<?> addProductOrder(@RequestBody ProductOrder productOrder) {
+    public ResponseEntity<?> addProductOrder(@RequestBody ProductOrderDto productOrder) {
         if(productOrderService.existById(productOrder.getProductOrderId())){
             return new ResponseEntity<>(
                     "Product order with that id already exists",
@@ -61,24 +69,18 @@ public class ProductOrderController {
         }
 
         // Fetch the Product from the database
-        Product product = productService.getProductById(productOrder.getProduct().getProductId());
+        Product product = productService.getProductById(productOrder.getProductId());
         if (product == null) {
             return new ResponseEntity<>(
                     "Product not found",
                     HttpStatus.NOT_FOUND);
         }
 
-        // Fetch the Order from the database
-        Order order = orderService.getOrder(productOrder.getOrder().getOrderId());
-        if (order == null) {
-            return new ResponseEntity<>(
-                    "Order not found",
-                    HttpStatus.NOT_FOUND);
+        Order order = orderService.getOrder(productOrder.getOrderId());
+        if (order != null) {
+            float totalPrice = product.getProductPrice() * productOrder.getQuantity();
+            order.setOrderPrice(order.getOrderPrice() + totalPrice);
         }
-
-        // Adjust the order price based on the product price and quantity
-        float totalPrice = product.getProductPrice() * productOrder.getQuantity();
-        order.setOrderPrice(order.getOrderPrice() + totalPrice);
 
         // Reduce the quantity in stock of the Product
         int newQuantityInStock = product.getQuantityInStock() - productOrder.getQuantity();
@@ -95,20 +97,19 @@ public class ProductOrderController {
 
 
     @PutMapping("productOrders/{id}")
-    public ResponseEntity<?> updateProductOrder(@RequestBody ProductOrder productOrder, @PathVariable("id") UUID productOrderId) {
-        productOrder.setProductOrderId(productOrderId);
-        if (!productOrderService.existById(productOrder.getProductOrderId())) {
+    public ResponseEntity<?> updateProductOrder(@RequestBody ProductOrderDto productOrderDto, @PathVariable("id") UUID productOrderId) {
+        productOrderDto.setProductOrderId(productOrderId);
+        if (!productOrderService.existById(productOrderDto.getProductOrderId())) {
             return new ResponseEntity<>("Product order with that id doesn't exist", HttpStatus.CONFLICT);
         }
 
-        // Fetch the existing ProductOrder
         ProductOrder existingProductOrder = productOrderService.getProductOrderById(productOrderId);
         if (existingProductOrder == null) {
             return new ResponseEntity<>("Product order not found", HttpStatus.NOT_FOUND);
         }
 
-        // Calculate the difference in quantity
-        int quantityDifference = productOrder.getQuantity() - existingProductOrder.getQuantity();
+
+        int quantityDifference = productOrderDto.getQuantity() - existingProductOrder.getQuantity();
 
         // Fetch the associated Product and Order
         Product product = existingProductOrder.getProduct();
@@ -128,13 +129,20 @@ public class ProductOrderController {
         }
         product.setQuantityInStock(newQuantityInStock);
 
-        // Update the ProductOrder
-        existingProductOrder.setQuantity(productOrder.getQuantity());
-        ProductOrder savedProductOrder = productOrderService.addProductOrder(existingProductOrder);
+
+        existingProductOrder.setQuantity(productOrderDto.getQuantity());
+        existingProductOrder.setOrder(orderRepository.findByOrderId(productOrderDto.getOrderId()));
+        existingProductOrder.setProduct(productRepository.findProductByProductId(productOrderDto.getProductId()));
+        ProductOrder savedProductOrder = productOrderService.updateProductOrder(existingProductOrder);
 
         return ResponseEntity.status(HttpStatus.OK).body(savedProductOrder);
     }
 
+    @PutMapping("productOrders/updateOrderIds")
+    public ResponseEntity<?> updateProductOrders(@RequestBody UpdateProductOrdersDto productOrders) {
+        productOrderService.updateOrderIds(productOrders.getProductOrders(), productOrders.getOrderId());
+        return ResponseEntity.status(HttpStatus.OK).body(productOrders);
+    }
 
     @DeleteMapping("productOrders/{id}")
     public ResponseEntity<String> deleteproductOrder(@PathVariable("id") UUID productOrderId) {

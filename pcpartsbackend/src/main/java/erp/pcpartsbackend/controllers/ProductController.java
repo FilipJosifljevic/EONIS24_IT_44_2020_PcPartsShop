@@ -1,6 +1,7 @@
 package erp.pcpartsbackend.controllers;
 
 
+import erp.pcpartsbackend.controllers.dto.ProductDto;
 import erp.pcpartsbackend.models.Product;
 import erp.pcpartsbackend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
 public class ProductController {
     
@@ -91,25 +92,25 @@ public class ProductController {
     }
 
     @PostMapping("products")
-    public ResponseEntity<?> addProduct(@RequestBody Product product) {
-        if(productService.existById(product.getProductId())){
+    public ResponseEntity<?> addProduct(@RequestBody ProductDto productDto) {
+        if(productService.existById(productDto.getProductId())){
             return new ResponseEntity<>(
                     "Product with that id already exists",
                     HttpStatus.CONFLICT);
         }
-        Product savedproduct = productService.addProduct(product);
+        Product savedproduct = productService.addProduct(productDto);
         return ResponseEntity.status(HttpStatus.OK).body(savedproduct);
     }
 
     @PutMapping("products/{id}")
-    public ResponseEntity<?> updateProduct(@RequestBody Product product, @PathVariable("id") UUID productId) {
-        product.setProductId(productId);
-        if(!productService.existById(product.getProductId())){
+    public ResponseEntity<?> updateProduct(@RequestBody ProductDto productDto, @PathVariable("id") UUID productId) {
+        productDto.setProductId(productId);
+        if(!productService.existById(productDto.getProductId())){
             return new ResponseEntity<>(
                     "Product with that id doesn't exist",
                     HttpStatus.CONFLICT);
         }
-        Product savedproduct = productService.addProduct(product);
+        Product savedproduct = productService.addProduct(productDto);
         return ResponseEntity.status(HttpStatus.OK).body(savedproduct);
     }
 

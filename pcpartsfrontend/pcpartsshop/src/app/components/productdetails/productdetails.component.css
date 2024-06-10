@@ -1,0 +1,15 @@
+.product-details-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  margin-top: 50px;/* Align text inside product-info to the left */
+}
+
+.product-details-container .product-image {
+  margin-right: 20px; /* Adjust as needed */
+}
+
+.product-details-container .product-info {
+  max-width: 400px; /* Adjust as needed */
+}

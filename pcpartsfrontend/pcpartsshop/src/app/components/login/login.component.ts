@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
+import { UserService } from '../../services/UserService';
+import {AuthService} from "../../services/AuthService";
 
 @Component({
   selector: 'app-login',
@@ -11,18 +13,10 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
   login() {
-    const user = { email: this.email, password: this.password };
-    this.http.post<JSON>('http://localhost:8081/login', user).subscribe({
-      next: () => {
-        console.log('Login successful');
-        this.router.navigate(['products']);
-      },
-      error: (error) => {
-        console.error('Login failed:', error);
-      }
-    });
+    this.authService.login(this.email, this.password).subscribe();
+    this.router.navigate(['/products']);
   }
 }
